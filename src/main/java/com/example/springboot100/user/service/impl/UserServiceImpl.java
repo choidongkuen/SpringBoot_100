@@ -3,7 +3,9 @@ package com.example.springboot100.user.service.impl;
 
 import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateRequest;
 import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateResponse;
+import com.example.springboot100.user.domain.dto.UserUpdateDto;
 import com.example.springboot100.user.domain.dto.UserUpdateDto.UserUpdateRequest;
+import com.example.springboot100.user.domain.dto.UserUpdateDto.UserUpdateResponse;
 import com.example.springboot100.user.domain.entity.User;
 import com.example.springboot100.user.domain.repository.UserRepository;
 import com.example.springboot100.user.exception.UserException;
@@ -37,11 +39,11 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public Object updateUser(Long id, UserUpdateRequest request) {
+    public UserUpdateResponse updateUser(Long id, UserUpdateRequest request) {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserException(NO_FOUND_USER));
 
-        return user.updateUser(request);
+        return UserUpdateResponse.from(user.updateUser(request));
     }
 }
