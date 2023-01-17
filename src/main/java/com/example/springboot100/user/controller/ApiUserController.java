@@ -1,6 +1,6 @@
 package com.example.springboot100.user.controller;
 
-import com.example.springboot100.notice.exception.ResponseError;
+import com.example.springboot100.exception.ResponseError;
 import com.example.springboot100.user.domain.dto.UserCreateDto;
 import com.example.springboot100.user.domain.dto.UserUpdateDto;
 import com.example.springboot100.user.service.UserService;
@@ -10,10 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -39,7 +36,24 @@ public class ApiUserController {
         );
     }
 
+    @PutMapping("/api/user/{id}")
+    public ResponseEntity<Object> updateUser(
+            @PathVariable("id") Long id,
+            @RequestBody @Valid UserUpdateDto.UserUpdateRequest request,
+            Errors errors
+    ) {
+
+        ResponseEntity<Object> responseErrors = getObjectResponseEntity(errors);
+        if (responseErrors != null) return responseErrors;
+
+        return new ResponseEntity<>(
+                userService.updateUser(id, request),HttpStatus.OK
+        );
+    }
+
+
     private static ResponseEntity<Object> getObjectResponseEntity(Errors errors) {
+
         if(errors.hasErrors()) {
 
             List<ResponseError> responseErrors = new ArrayList<>();
@@ -56,19 +70,5 @@ public class ApiUserController {
 
         }
         return null;
-    }
-
-    @PutMapping("/api/user/{id}")
-    public ResponseEntity<Object> updateUser(
-            @RequestBody @Valid UserUpdateDto.UserUpdateRequest request,
-            Errors errors
-    ) {
-
-        ResponseEntity<Object> responseErrors = getObjectResponseEntity(errors);
-        if (responseErrors != null) return responseErrors;
-
-        return new ResponseEntity<>(
-                userService.updateUser(request),HttpStatus.OK
-        );
     }
 }
