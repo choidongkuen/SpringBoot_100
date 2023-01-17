@@ -19,7 +19,6 @@ public interface NoticeService {
     void noticeHits(Long id);
 
     void deleteNotice(Long id);
-
     void deleteNoticeList(NoticeDeleteInput request);
 
     Page<Notice> noticeLatest(int count);
