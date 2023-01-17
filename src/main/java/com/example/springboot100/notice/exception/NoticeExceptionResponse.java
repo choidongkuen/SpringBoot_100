@@ -1,5 +1,6 @@
 package com.example.springboot100.notice.exception;
 
+import com.example.springboot100.exception.ErrorCode;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;
