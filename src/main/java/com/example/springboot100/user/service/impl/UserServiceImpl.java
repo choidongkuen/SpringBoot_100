@@ -56,5 +56,6 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserException(NO_FOUND_USER));
 
         return UserDto.from(user);
+
     }
 }
