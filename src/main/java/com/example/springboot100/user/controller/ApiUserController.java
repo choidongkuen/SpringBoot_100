@@ -1,7 +1,8 @@
 package com.example.springboot100.user.controller;
 
 import com.example.springboot100.notice.exception.ResponseError;
-import com.example.springboot100.user.domain.dto.UserCreateRequestDto;
+import com.example.springboot100.user.domain.dto.UserCreateDto;
+import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateRequest;
 import com.example.springboot100.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,7 @@ public class ApiUserController {
 
     @PostMapping("/api/user")
     public ResponseEntity<Object> addUser(
-            @RequestBody @Valid UserCreateRequestDto request,
+            @RequestBody @Valid UserCreateRequest request,
             Errors errors)
     {
         if(errors.hasErrors()) {
