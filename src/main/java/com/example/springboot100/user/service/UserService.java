@@ -1,5 +1,6 @@
 package com.example.springboot100.user.service;
 
+import com.example.springboot100.user.domain.dto.UserDto;
 import com.example.springboot100.user.domain.dto.UserUpdateDto.UserUpdateRequest;
 import com.example.springboot100.user.domain.dto.UserUpdateDto.UserUpdateResponse;
 
@@ -11,4 +12,6 @@ public interface UserService {
     UserCreateResponse addUser(UserCreateRequest request);
 
     UserUpdateResponse updateUser(Long id, UserUpdateRequest request);
+
+    UserDto getUser(Long id);
 }
