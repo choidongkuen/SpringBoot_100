@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -15,7 +17,9 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
+@Table(name = "users")
+@SQLDelete(sql = "UPDATE USER SET USER.DELETED_AT = CURRENT_TIMESTAMP WHERE USER.ID = ?")
+@Where(clause = "DELETED_AT is NULL")
 @Entity
 public class User extends BaseEntity {
 
@@ -25,6 +29,9 @@ public class User extends BaseEntity {
     private Long id;
 
     @Column
+    private String name;
+
+    @Column
     private String email;
 
     @Column
@@ -32,5 +39,4 @@ public class User extends BaseEntity {
 
     @Column
     private String phone;
-
 }
