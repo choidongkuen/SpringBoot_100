@@ -13,6 +13,6 @@ public class UserExceptionHandler {
     public ResponseEntity<UserExceptionResponse> userExceptionHandler(UserException e) {
 
         log.error("예외발샹");
-        return UserException.toResponseEntity(e);
+        return UserExceptionResponse.toResponseEntity(e);
     }
 }
