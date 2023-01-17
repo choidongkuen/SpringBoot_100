@@ -1,7 +1,8 @@
 package com.example.springboot100.user.controller;
 
 import com.example.springboot100.notice.exception.ResponseError;
-import com.example.springboot100.user.domain.dto.UserCreateRequestDto;
+import com.example.springboot100.user.domain.dto.UserCreateDto;
+import com.example.springboot100.user.domain.dto.UserUpdateDto;
 import com.example.springboot100.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,9 +28,18 @@ public class ApiUserController {
 
     @PostMapping("/api/user")
     public ResponseEntity<Object> addUser(
-            @RequestBody @Valid UserCreateRequestDto request,
+            @RequestBody @Valid UserCreateDto.UserCreateRequest request,
             Errors errors)
     {
+        ResponseEntity<Object> responseErrors = getObjectResponseEntity(errors);
+        if (responseErrors != null) return responseErrors;
+
+        return new ResponseEntity<>(
+                userService.addUser(request),HttpStatus.OK
+        );
+    }
+
+    private static ResponseEntity<Object> getObjectResponseEntity(Errors errors) {
         if(errors.hasErrors()) {
 
             List<ResponseError> responseErrors = new ArrayList<>();
@@ -44,9 +55,20 @@ public class ApiUserController {
             );
 
         }
+        return null;
+    }
+
+    @PutMapping("/api/user/{id}")
+    public ResponseEntity<Object> updateUser(
+            @RequestBody @Valid UserUpdateDto.UserUpdateRequest request,
+            Errors errors
+    ) {
+
+        ResponseEntity<Object> responseErrors = getObjectResponseEntity(errors);
+        if (responseErrors != null) return responseErrors;
 
         return new ResponseEntity<>(
-                userService.addUser(request),HttpStatus.OK
+                userService.updateUser(request),HttpStatus.OK
         );
     }
 }
