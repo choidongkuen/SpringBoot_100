@@ -1,8 +1,10 @@
 package com.example.springboot100.user.service;
 
-import com.example.springboot100.user.domain.dto.UserCreateRequestDto;
+import static com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateRequest;
+import static com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateResponse;
 
 public interface UserService {
-    
-    Object addUser(UserCreateRequestDto request);
+
+    UserCreateResponse addUser(UserCreateRequest request);
+
 }
