@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.example.springboot100.notice.exception.ErrorCode.NO_FOUND_NOTICE;
+import static com.example.springboot100.exception.ErrorCode.NO_FOUND_NOTICE;
 
 @Slf4j
 @RequiredArgsConstructor
