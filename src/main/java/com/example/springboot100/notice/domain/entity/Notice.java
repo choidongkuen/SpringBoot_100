@@ -2,6 +2,7 @@ package com.example.springboot100.notice.domain.entity;
 
 
 import com.example.springboot100.notice.domain.dto.CreateNoticeDto;
+import com.example.springboot100.user.domain.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,6 +31,10 @@ public class Notice extends BaseEntity {
 
     @Column
     private String title;
+
+    @ManyToOne
+    @JoinColumn(name = "user")
+    private User user;
 
     @Column
     private String content;
