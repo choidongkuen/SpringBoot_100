@@ -21,5 +21,6 @@ public class UserException extends RuntimeException {
 
         super(message);
         this.errorCode = errorCode;
+
     }
 }
