@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface NoticeRepository extends JpaRepository<Notice,Long> {
+public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
     Optional<List<Notice>> findByIdIn(List<Long> idList);
 
     Optional<List<Notice>> findByUser(User user);
 
- }
+}

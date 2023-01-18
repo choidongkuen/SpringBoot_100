@@ -22,4 +22,6 @@ public interface NoticeService {
     void deleteNoticeList(NoticeDeleteInput request);
 
     Page<Notice> noticeLatest(int count);
+
+    List<NoticeDto> getUserNotice(Long id);
 }

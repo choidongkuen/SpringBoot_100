@@ -5,7 +5,7 @@ import com.example.springboot100.notice.domain.dto.CreateNoticeDto.CreateNoticeR
 import com.example.springboot100.notice.domain.dto.CreateNoticeDto.NoticeInputRequest;
 import com.example.springboot100.notice.domain.dto.NoticeDeleteInput;
 import com.example.springboot100.notice.domain.dto.NoticeDto;
-import com.example.springboot100.notice.exception.ResponseError;
+import com.example.springboot100.exception.ResponseError;
 import com.example.springboot100.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -3,10 +3,14 @@ package com.example.springboot100.notice.service.impl;
 
 import com.example.springboot100.notice.domain.dto.CreateNoticeDto.NoticeInputRequest;
 import com.example.springboot100.notice.domain.dto.NoticeDeleteInput;
+import com.example.springboot100.notice.domain.dto.NoticeDto;
 import com.example.springboot100.notice.domain.entity.Notice;
 import com.example.springboot100.notice.domain.repository.NoticeRepository;
 import com.example.springboot100.notice.exception.NoticeException;
 import com.example.springboot100.notice.service.NoticeService;
+import com.example.springboot100.user.domain.entity.User;
+import com.example.springboot100.user.domain.repository.UserRepository;
+import com.example.springboot100.user.exception.UserException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -16,8 +20,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.springboot100.exception.ErrorCode.NO_FOUND_NOTICE;
+import static com.example.springboot100.exception.ErrorCode.NO_FOUND_USER;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,6 +31,9 @@ import static com.example.springboot100.exception.ErrorCode.NO_FOUND_NOTICE;
 public class NoticeServiceImpl implements NoticeService {
 
     private final NoticeRepository noticeRepository;
+
+    private final UserRepository userRepository;
+
 
     @Transactional
     @Override
@@ -89,11 +98,27 @@ public class NoticeServiceImpl implements NoticeService {
 
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<Notice> noticeLatest(int size) {
 
         return noticeRepository.findAll(
                 PageRequest.of(0, size, Sort.Direction.DESC, "id")
         );
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<NoticeDto> getUserNotice(Long id) {
+
+        User user = userRepository.findById(id)
+                                  .orElseThrow(() -> new UserException(NO_FOUND_USER));
+
+        List<Notice> noticeList = noticeRepository.findByUser(user)
+                                                  .orElseThrow(() -> new NoticeException(NO_FOUND_NOTICE));
+
+        return noticeList.stream()
+                         .map(NoticeDto::fromEntity)
+                         .collect(Collectors.toList());
     }
 }

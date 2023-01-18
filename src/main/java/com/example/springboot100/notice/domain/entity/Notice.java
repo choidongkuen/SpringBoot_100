@@ -18,7 +18,6 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
 @SQLDelete(sql = "UPDATE NOTICE SET NOTICE.DELETED_AT = CURRENT_TIMESTAMP WHERE NOTICE.ID = ?")
 @Where(clause = "DELETED_AT is NULL")
 @Entity
@@ -33,7 +32,7 @@ public class Notice extends BaseEntity {
     private String title;
 
     @ManyToOne
-    @JoinColumn(name = "user")
+    @JoinColumn
     private User user;
 
     @Column

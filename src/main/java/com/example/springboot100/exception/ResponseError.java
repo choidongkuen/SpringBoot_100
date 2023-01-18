@@ -1,4 +1,4 @@
-package com.example.springboot100.notice.exception;
+package com.example.springboot100.exception;
 
 import lombok.*;
 import org.springframework.http.HttpStatus;

@@ -30,11 +30,11 @@ public class UserExceptionResponse {
         return ResponseEntity
                 .status(errorCode.getHttpStatus())
                 .body(UserExceptionResponse.builder()
-                        .status(errorCode.getHttpStatus().value())
-                        .error(errorCode.getHttpStatus().name())
-                        .code(errorCode.name())
-                        .description(errorCode.getMessage())
-                        .message(e.getMessage())
-                        .build());
+                                           .status(errorCode.getHttpStatus().value())
+                                           .error(errorCode.getHttpStatus().name())
+                                           .code(errorCode.name())
+                                           .description(errorCode.getMessage())
+                                           .message(e.getMessage())
+                                           .build());
     }
 }

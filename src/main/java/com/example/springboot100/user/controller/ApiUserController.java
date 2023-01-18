@@ -2,8 +2,8 @@ package com.example.springboot100.user.controller;
 
 
 import com.example.springboot100.exception.ResponseError;
-import com.example.springboot100.notice.exception.ResponseError;
-import com.example.springboot100.user.domain.dto.UserCreateDto;
+import com.example.springboot100.notice.domain.dto.NoticeDto;
+import com.example.springboot100.notice.service.NoticeService;
 import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateRequest;
 
 
@@ -27,6 +27,8 @@ import java.util.List;
 public class ApiUserController {
 
     private final UserService userService;
+
+    private final NoticeService noticeService;
 
     @PostMapping("/api/user")
     public ResponseEntity<Object> addUser(
@@ -63,6 +65,15 @@ public class ApiUserController {
         return new ResponseEntity<>(
                 userService.getUser(id), HttpStatus.OK
         );
+    }
+
+    @GetMapping("/api/user/{id}/notice")
+    public ResponseEntity<List<NoticeDto>> getUserNotice(@PathVariable("id") Long id) {
+
+        return new ResponseEntity<>(
+                noticeService.getUserNotice(id), HttpStatus.OK
+        );
+
     }
 
 
