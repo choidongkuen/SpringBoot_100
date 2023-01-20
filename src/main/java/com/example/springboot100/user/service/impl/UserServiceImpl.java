@@ -29,11 +29,11 @@ public class UserServiceImpl implements UserService {
     public UserCreateResponse addUser(UserCreateRequest request) {
 
         return UserCreateResponse.from(userRepository.save(User.builder()
-                                                               .email(request.getEmail())
-                                                               .name(request.getName())
-                                                               .password(request.getPassword())
-                                                               .phone(request.getPhone())
-                                                               .build()
+                                   .email(request.getEmail())
+                                   .name(request.getName())
+                                   .password(request.getPassword())
+                                   .phone(request.getPhone())
+                                   .build()
         ));
     }
 
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     public UserUpdateResponse updateUser(Long id, UserUpdateRequest request) {
 
         User user = userRepository.findById(id)
-                                  .orElseThrow(() -> new UserException(NO_FOUND_USER));
+                          .orElseThrow(() -> new UserException(NO_FOUND_USER));
 
         return UserUpdateResponse.from(user.updateUser(request));
     }
@@ -55,6 +55,5 @@ public class UserServiceImpl implements UserService {
                                   .orElseThrow(() -> new UserException(NO_FOUND_USER));
 
         return UserDto.from(user);
-
     }
 }
