@@ -4,9 +4,11 @@ package com.example.springboot100.user.service.impl;
 import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateRequest;
 import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateResponse;
 import com.example.springboot100.user.domain.dto.UserDto;
-import com.example.springboot100.user.domain.dto.UserUpdateDto;
 import com.example.springboot100.user.domain.dto.UserUpdateDto.UserUpdateRequest;
 import com.example.springboot100.user.domain.dto.UserUpdateDto.UserUpdateResponse;
+import com.example.springboot100.user.domain.dto.UserUpdatePasswordDto;
+import com.example.springboot100.user.domain.dto.UserUpdatePasswordDto.UserUpdatePasswordRequest;
+import com.example.springboot100.user.domain.dto.UserUpdatePasswordDto.UserUpdatePasswordResponse;
 import com.example.springboot100.user.domain.entity.User;
 import com.example.springboot100.user.domain.repository.UserRepository;
 import com.example.springboot100.user.exception.UserException;
@@ -57,5 +59,17 @@ public class UserServiceImpl implements UserService {
 
         return UserDto.from(user);
 
+    }
+
+    @Transactional
+    @Override
+    public UserUpdatePasswordResponse updatePassword(Long id, UserUpdatePasswordRequest request) {
+
+        User user = userRepository.findByIdAndPassword(id, request.getPassword())
+                .orElseThrow(() -> new UserException(NO_FOUND_USER));
+
+        user.updateUserPassword(request.getNewPassword());
+
+        return UserUpdatePasswordResponse.from(user);
     }
 }
