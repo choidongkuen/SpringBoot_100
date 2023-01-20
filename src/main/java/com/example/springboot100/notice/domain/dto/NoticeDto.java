@@ -12,6 +12,8 @@ import lombok.*;
 @NoArgsConstructor
 public class NoticeDto {
 
+    private Long userId;
+
     private String title;
 
     private String content;
@@ -23,6 +25,7 @@ public class NoticeDto {
     public static NoticeDto fromEntity( Notice notice ) {
 
         return NoticeDto.builder()
+                .userId(notice.getUser().getId())
                 .title(notice.getTitle())
                 .content(notice.getContent())
                 .likes(notice.getLikes())
