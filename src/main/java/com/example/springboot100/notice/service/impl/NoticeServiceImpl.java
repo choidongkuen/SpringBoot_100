@@ -115,7 +115,7 @@ public class NoticeServiceImpl implements NoticeService {
                                   .orElseThrow(() -> new UserException(NO_FOUND_USER));
 
         List<Notice> noticeList = noticeRepository.findByUser(user)
-                                                  .orElseThrow(() -> new NoticeException(NO_FOUND_NOTICE));
+                                  .orElseThrow(() -> new NoticeException(NO_FOUND_NOTICE));
 
         return noticeList.stream()
                          .map(NoticeDto::fromEntity)
