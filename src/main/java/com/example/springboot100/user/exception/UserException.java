@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 
 
-@Getter
 @Builder
+@Getter
 public class UserException extends RuntimeException {
 
     private ErrorCode errorCode;
