@@ -83,6 +83,21 @@ public class ApiUserController {
 
     }
 
+    @DeleteMapping("/api/user/{id}")
+    public ResponseEntity<Object> deleteUser(
+            @PathVariable("id") Long id,
+            Errors errors
+    ){
+        ResponseEntity<Object> responseErrors = getObjectResponseEntity(errors);
+
+        if (responseErrors != null){
+            return responseErrors;
+        }
+
+        userService.deleteUser(id);
+        return ResponseEntity.ok().build();
+    }
+
 
     private static ResponseEntity<Object> getObjectResponseEntity(Errors errors) {
 
