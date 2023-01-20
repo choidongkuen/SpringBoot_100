@@ -15,6 +15,7 @@ import com.example.springboot100.user.exception.UserException;
 import com.example.springboot100.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    private final BCryptPasswordEncoder passwordEncoder;
+
     @Transactional
     @Override
     public UserCreateResponse addUser(UserCreateRequest request) {
@@ -34,7 +37,7 @@ public class UserServiceImpl implements UserService {
         return UserCreateResponse.from(userRepository.save(User.builder()
                 .email(request.getEmail())
                 .name(request.getName())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .phone(request.getPhone())
                 .build()
         ));
