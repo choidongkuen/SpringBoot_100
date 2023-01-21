@@ -4,6 +4,7 @@ package com.example.springboot100.user.controller;
 import com.example.springboot100.notice.exception.ResponseError;
 import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateRequest;
 import com.example.springboot100.user.domain.dto.UserFindDto;
+import com.example.springboot100.user.domain.dto.UserLoginDto;
 import com.example.springboot100.user.domain.dto.UserUpdateDto;
 import com.example.springboot100.user.domain.dto.UserUpdatePasswordDto;
 import com.example.springboot100.user.domain.dto.UserUpdatePasswordDto.UserUpdatePasswordRequest;
@@ -125,6 +126,23 @@ public class ApiUserController {
 
         return new ResponseEntity<> (
                 userService.likeNotice(id), HttpStatus.OK
+        );
+    }
+
+    @PostMapping("/api/user/login")
+    public ResponseEntity<Object> createToken(
+            @RequestBody @Valid UserLoginDto request,
+            Errors errors
+    ) {
+
+        ResponseEntity<Object> responseErrors = getObjectResponseEntity(errors);
+
+        if (responseErrors != null){
+            return responseErrors;
+        }
+
+        return new ResponseEntity<>(
+                userService.createToken(request), HttpStatus.OK
         );
     }
 
