@@ -4,6 +4,7 @@ package com.example.springboot100.user.service.impl;
 import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateRequest;
 import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateResponse;
 import com.example.springboot100.user.domain.dto.UserDto;
+import com.example.springboot100.user.domain.dto.UserFindDto;
 import com.example.springboot100.user.domain.dto.UserUpdateDto.UserUpdateRequest;
 import com.example.springboot100.user.domain.dto.UserUpdateDto.UserUpdateResponse;
 import com.example.springboot100.user.domain.dto.UserUpdatePasswordDto.UserUpdatePasswordRequest;
@@ -85,4 +86,16 @@ public class UserServiceImpl implements UserService {
 
         userRepository.delete(user);
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public UserCreateResponse findUser(UserFindDto request) {
+
+        User user = userRepository.findByNameAndPhone(
+                request.getUserName(),request.getPhone())
+                .orElseThrow(() -> new UserException(NO_FOUND_USER));
+
+        return UserCreateResponse.from(user);
+    }
+
 }

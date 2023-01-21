@@ -3,6 +3,7 @@ package com.example.springboot100.user.controller;
 
 import com.example.springboot100.notice.exception.ResponseError;
 import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateRequest;
+import com.example.springboot100.user.domain.dto.UserFindDto;
 import com.example.springboot100.user.domain.dto.UserUpdateDto;
 import com.example.springboot100.user.domain.dto.UserUpdatePasswordDto;
 import com.example.springboot100.user.domain.dto.UserUpdatePasswordDto.UserUpdatePasswordRequest;
@@ -90,6 +91,27 @@ public class ApiUserController {
         userService.deleteUser(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/api/user")
+    public ResponseEntity<Object> findUser(
+            @RequestBody UserFindDto request,
+            Errors errors
+
+    ) {
+        ResponseEntity<Object> responseErrors = getObjectResponseEntity(errors);
+
+        if (responseErrors != null){
+            return responseErrors;
+        }
+
+        return new ResponseEntity<>(
+                userService.findUser(request), HttpStatus.OK
+        );
+    }
+
+
+
+
 
 
     private static ResponseEntity<Object> getObjectResponseEntity(Errors errors) {

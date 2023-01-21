@@ -1,6 +1,7 @@
 package com.example.springboot100.user.service;
 
 import com.example.springboot100.user.domain.dto.UserDto;
+import com.example.springboot100.user.domain.dto.UserFindDto;
 import com.example.springboot100.user.domain.dto.UserUpdateDto.UserUpdateRequest;
 import com.example.springboot100.user.domain.dto.UserUpdateDto.UserUpdateResponse;
 import com.example.springboot100.user.domain.dto.UserUpdatePasswordDto;
@@ -19,4 +20,6 @@ public interface UserService {
     UserUpdatePasswordDto.UserUpdatePasswordResponse updatePassword(Long id, UserUpdatePasswordDto.UserUpdatePasswordRequest request);
 
     void deleteUser(Long id);
+
+    UserCreateResponse findUser(UserFindDto request);
 }

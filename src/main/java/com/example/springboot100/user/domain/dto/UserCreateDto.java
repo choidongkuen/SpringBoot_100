@@ -31,7 +31,7 @@ public class UserCreateDto {
         private String password;
 
         @NotBlank(message = "전화번호는 필수 항목 입니다.")
-        @Size(message = "연락처는 필수 항목 입니다.")
+        @Size(max = 20 ,message = "전화번호는 최대 20자 입니다.")
         private String phone;
     }
 
