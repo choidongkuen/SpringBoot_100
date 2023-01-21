@@ -19,6 +19,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 import static com.example.springboot100.exception.ErrorCode.NO_FOUND_USER;
 
 @Slf4j
@@ -27,7 +29,7 @@ import static com.example.springboot100.exception.ErrorCode.NO_FOUND_USER;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bcryptPasswordEncoder;
 
 
     @Transactional
@@ -37,7 +39,7 @@ public class UserServiceImpl implements UserService {
         return UserCreateResponse.from(userRepository.save(User.builder()
                                .email(request.getEmail())
                                .name(request.getName())
-                               .password(bCryptPasswordEncoder.encode(request.getPassword()))
+                               .password(bcryptPasswordEncoder.encode(request.getPassword()))
                                .phone(request.getPhone())
                                .build()
         ));
@@ -98,4 +100,14 @@ public class UserServiceImpl implements UserService {
         return UserCreateResponse.from(user);
     }
 
+    @Transactional
+    @Override
+    public void resetUserPassword(Long id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserException(NO_FOUND_USER));
+
+        String resetPassword = UUID.randomUUID().toString(); // 비밀번호 랜덤
+        user.resetUserPassword(bcryptPasswordEncoder.encode(resetPassword)); // 비밀번호 암호화
+    }
 }

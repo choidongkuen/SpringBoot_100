@@ -54,4 +54,10 @@ public class User extends BaseEntity {
         this.password = newPassword;
     }
 
+    public void resetUserPassword ( String resetPassword) {
+
+        this.password = resetPassword;
+
+    }
+
 }
