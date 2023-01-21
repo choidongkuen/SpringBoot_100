@@ -35,7 +35,7 @@ public class Notice extends BaseEntity {
     @Column
     private String content;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "userId")
     private User user;
 
