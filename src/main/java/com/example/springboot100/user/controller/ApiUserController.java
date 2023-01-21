@@ -18,6 +18,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -143,6 +144,14 @@ public class ApiUserController {
 
         return new ResponseEntity<>(
                 userService.createToken(request), HttpStatus.OK
+        );
+    }
+
+    @PatchMapping("/api/user/login")
+    public ResponseEntity<Object> refreshToken(HttpServletRequest request) {
+
+        return new ResponseEntity<>(
+                userService.refreshToken(request), HttpStatus.OK
         );
     }
 
