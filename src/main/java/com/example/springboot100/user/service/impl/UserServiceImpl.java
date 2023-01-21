@@ -1,6 +1,7 @@
 package com.example.springboot100.user.service.impl;
 
 
+import com.example.springboot100.noticelike.domain.UserNoticeLikeDto;
 import com.example.springboot100.noticelike.domain.entity.NoticeLike;
 import com.example.springboot100.noticelike.domain.repository.NoticeLikeRepository;
 import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateRequest;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static com.example.springboot100.exception.ErrorCode.NO_FOUND_USER;
 
@@ -117,13 +119,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<NoticeLike> likeNotice(Long id) {
+    public List<UserNoticeLikeDto> likeNotice(Long id) {
 
         User user = userRepository.findById(id)
                                   .orElseThrow(() -> new UserException(NO_FOUND_USER));
 
-        List<NoticeLike> noticeLikes = noticeLikeRepository.findByUser(user);
+        return noticeLikeRepository.findByUser(user)
+                .stream()
+                .map(UserNoticeLikeDto :: from)
+                .collect(Collectors.toList());
 
-        return noticeLikes;
     }
 }
