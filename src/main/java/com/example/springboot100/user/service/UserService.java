@@ -22,4 +22,6 @@ public interface UserService {
     void deleteUser(Long id);
 
     UserCreateResponse findUser(UserFindDto request);
+
+    void resetUserPassword(Long id);
 }
