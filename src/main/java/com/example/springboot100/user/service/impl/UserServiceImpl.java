@@ -1,6 +1,9 @@
 package com.example.springboot100.user.service.impl;
 
 
+import com.example.springboot100.noticelike.domain.UserNoticeLikeDto;
+import com.example.springboot100.noticelike.domain.entity.NoticeLike;
+import com.example.springboot100.noticelike.domain.repository.NoticeLikeRepository;
 import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateRequest;
 import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateResponse;
 import com.example.springboot100.user.domain.dto.UserDto;
@@ -19,7 +22,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static com.example.springboot100.exception.ErrorCode.NO_FOUND_USER;
 
@@ -31,17 +36,19 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bcryptPasswordEncoder;
 
+    private final NoticeLikeRepository noticeLikeRepository;
+
 
     @Transactional
     @Override
     public UserCreateResponse addUser(UserCreateRequest request) {
 
         return UserCreateResponse.from(userRepository.save(User.builder()
-                               .email(request.getEmail())
-                               .name(request.getName())
-                               .password(bcryptPasswordEncoder.encode(request.getPassword()))
-                               .phone(request.getPhone())
-                               .build()
+                                           .email(request.getEmail())
+                                           .name(request.getName())
+                                           .password(bcryptPasswordEncoder.encode(request.getPassword()))
+                                           .phone(request.getPhone())
+                                           .build()
         ));
     }
 
@@ -84,7 +91,7 @@ public class UserServiceImpl implements UserService {
 
         // 회원이 작성한 게시글이 있으면 삭제가 안됨.
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserException(NO_FOUND_USER));
+                                  .orElseThrow(() -> new UserException(NO_FOUND_USER));
 
         userRepository.delete(user);
     }
@@ -94,8 +101,8 @@ public class UserServiceImpl implements UserService {
     public UserCreateResponse findUser(UserFindDto request) {
 
         User user = userRepository.findByNameAndPhone(
-                request.getUserName(),request.getPhone())
-                .orElseThrow(() -> new UserException(NO_FOUND_USER));
+                                          request.getUserName(), request.getPhone())
+                                  .orElseThrow(() -> new UserException(NO_FOUND_USER));
 
         return UserCreateResponse.from(user);
     }
@@ -105,9 +112,22 @@ public class UserServiceImpl implements UserService {
     public void resetUserPassword(Long id) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserException(NO_FOUND_USER));
+                                  .orElseThrow(() -> new UserException(NO_FOUND_USER));
 
         String resetPassword = UUID.randomUUID().toString(); // 비밀번호 랜덤
         user.resetUserPassword(bcryptPasswordEncoder.encode(resetPassword)); // 비밀번호 암호화
+    }
+
+    @Override
+    public List<UserNoticeLikeDto> likeNotice(Long id) {
+
+        User user = userRepository.findById(id)
+                                  .orElseThrow(() -> new UserException(NO_FOUND_USER));
+
+        return noticeLikeRepository.findByUser(user)
+                .stream()
+                .map(UserNoticeLikeDto :: from)
+                .collect(Collectors.toList());
+
     }
 }

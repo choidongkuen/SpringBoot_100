@@ -117,10 +117,16 @@ public class ApiUserController {
         return ResponseEntity.ok().build();
     }
 
+    // id 해당하는 회원이 좋아요한 게시글 목록
+    @GetMapping("/api/user/{id}/notice/like")
+    public ResponseEntity<Object> likeNotice(
+                  @PathVariable("id") Long id
+    ) {
 
-
-
-
+        return new ResponseEntity<> (
+                userService.likeNotice(id), HttpStatus.OK
+        );
+    }
 
     private static ResponseEntity<Object> getObjectResponseEntity(Errors errors) {
 

@@ -24,4 +24,6 @@ public interface UserService {
     UserCreateResponse findUser(UserFindDto request);
 
     void resetUserPassword(Long id);
+
+    Object likeNotice(Long id);
 }
