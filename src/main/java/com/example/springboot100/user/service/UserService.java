@@ -7,6 +7,8 @@ import com.example.springboot100.user.domain.dto.UserUpdateDto.UserUpdateRequest
 import com.example.springboot100.user.domain.dto.UserUpdateDto.UserUpdateResponse;
 import com.example.springboot100.user.domain.dto.UserUpdatePasswordDto;
 
+import javax.servlet.http.HttpServletRequest;
+
 import static com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateRequest;
 import static com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateResponse;
 
@@ -29,4 +31,6 @@ public interface UserService {
     Object likeNotice(Long id);
 
     Object createToken(UserLoginDto request);
+
+    Object refreshToken(String token);
 }

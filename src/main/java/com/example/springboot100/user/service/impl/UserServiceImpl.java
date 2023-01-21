@@ -1,7 +1,10 @@
 package com.example.springboot100.user.service.impl;
 
 
+import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.example.springboot100.noticelike.domain.UserNoticeLikeDto;
 import com.example.springboot100.noticelike.domain.repository.NoticeLikeRepository;
 import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateRequest;
@@ -18,6 +21,7 @@ import com.example.springboot100.user.domain.entity.User;
 import com.example.springboot100.user.domain.repository.UserRepository;
 import com.example.springboot100.user.exception.UserException;
 import com.example.springboot100.user.service.UserService;
+import com.example.springboot100.util.JwtUtils;
 import com.example.springboot100.util.PasswordUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +29,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -157,5 +163,20 @@ public class UserServiceImpl implements UserService {
                        .withSubject(user.getName())
                        .sign(Algorithm.HMAC512("zerobase".getBytes())
                 )).build();
+    }
+
+    @Override
+    public String refreshToken(String token) throws JWTDecodeException {
+
+        User user = userRepository.findByEmail(new JwtUtils().getIssuer(token))
+                .orElseThrow(() -> new UserException(NO_FOUND_USER));
+
+        return JWT.create()
+                .withExpiresAt(Timestamp.valueOf(LocalDateTime.now()))
+                .withClaim("user_id",user.getId())
+                .withSubject(user.getName())
+                .withIssuer(user.getEmail())
+                .sign(Algorithm.HMAC512("zerobase".getBytes()));
+
     }
 }
