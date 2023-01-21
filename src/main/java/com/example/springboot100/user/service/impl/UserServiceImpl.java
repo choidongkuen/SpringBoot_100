@@ -4,6 +4,7 @@ package com.example.springboot100.user.service.impl;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.example.springboot100.noticelike.domain.UserNoticeLikeDto;
 import com.example.springboot100.noticelike.domain.repository.NoticeLikeRepository;
 import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateRequest;
@@ -20,6 +21,7 @@ import com.example.springboot100.user.domain.entity.User;
 import com.example.springboot100.user.domain.repository.UserRepository;
 import com.example.springboot100.user.exception.UserException;
 import com.example.springboot100.user.service.UserService;
+import com.example.springboot100.util.JwtUtils;
 import com.example.springboot100.util.PasswordUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -163,33 +166,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String refreshToken(HttpServletRequest request) {
+    public String refreshToken(String token) throws JWTDecodeException {
 
-        String token = request.getHeader("Z-TOKEN");
+        User user = userRepository.findByEmail(new JwtUtils().getIssuer(token))
+                .orElseThrow(() -> new UserException(NO_FOUND_USER));
 
-        String email = "";
+        return JWT.create()
+                .withExpiresAt(Timestamp.valueOf(LocalDateTime.now()))
+                .withClaim("user_id",user.getId())
+                .withSubject(user.getName())
+                .withIssuer(user.getEmail())
+                .sign(Algorithm.HMAC512("zerobase".getBytes()));
 
-        try {
-
-            email = JWT.require(Algorithm.HMAC512("zerobase".getBytes()))
-                       .build()
-                       .verify(token)
-                       .getIssuer();
-
-            User user = userRepository.findByEmail(email)
-                                      .orElseThrow(() -> new UserException(NO_FOUND_USER));
-
-
-            LocalDateTime expiredDt = LocalDateTime.now().plusDays(1);
-
-            return JWT.create()
-                      .withExpiresAt(Timestamp.valueOf(expiredDt))
-                      .withClaim("user+id", user.getId())
-                      .withSubject(user.getName())
-                      .withIssuer(user.getEmail())
-                      .sign(Algorithm.HMAC512("zerobase".getBytes()));
-        }catch (JWTDecodeException e) {
-            throw new UserException(NO_FOUND_USER);
-        }
     }
 }

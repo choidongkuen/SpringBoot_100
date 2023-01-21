@@ -32,5 +32,5 @@ public interface UserService {
 
     Object createToken(UserLoginDto request);
 
-    Object refreshToken(HttpServletRequest request);
+    Object refreshToken(String token);
 }
