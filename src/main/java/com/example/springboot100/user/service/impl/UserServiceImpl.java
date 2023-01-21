@@ -74,4 +74,15 @@ public class UserServiceImpl implements UserService {
 
         return UserUpdatePasswordResponse.from(user);
     }
+
+    @Transactional
+    @Override
+    public void deleteUser(Long id) {
+
+        // 회원이 작성한 게시글이 있으면 삭제가 안됨.
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserException(NO_FOUND_USER));
+
+        userRepository.delete(user);
+    }
 }

@@ -17,4 +17,6 @@ public interface UserService {
     UserDto getUser(Long id);
 
     UserUpdatePasswordDto.UserUpdatePasswordResponse updatePassword(Long id, UserUpdatePasswordDto.UserUpdatePasswordRequest request);
+
+    void deleteUser(Long id);
 }
