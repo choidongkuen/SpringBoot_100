@@ -1,8 +1,10 @@
 package com.example.springboot100.admin.controller;
 
+import com.example.springboot100.admin.domain.dto.ResponseMessage;
 import com.example.springboot100.admin.domain.dto.UserInfoResponseDto;
 import com.example.springboot100.admin.service.AdminService;
 import com.example.springboot100.user.domain.dto.UserDto;
+import com.example.springboot100.user.domain.dto.UserStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -45,6 +47,17 @@ public class ApiAdminController {
     ) {
         return new ResponseEntity<>(
                 adminService.findUser(email), HttpStatus.OK
+        );
+    }
+
+    // 사용자의 상태를 변경하는 API
+    @PatchMapping("/api/admin/{id}/status")
+    public ResponseEntity<ResponseMessage> userStatus(
+            @PathVariable("id") Long id,
+            @RequestBody UserStatus userStatus
+    ) {
+        return new ResponseEntity<>(
+                adminService.userStatus(id, userStatus), HttpStatus.OK
         );
     }
 }
