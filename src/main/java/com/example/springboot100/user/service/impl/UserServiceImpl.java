@@ -1,7 +1,9 @@
 package com.example.springboot100.user.service.impl;
 
 
+import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.example.springboot100.noticelike.domain.UserNoticeLikeDto;
 import com.example.springboot100.noticelike.domain.repository.NoticeLikeRepository;
 import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateRequest;
@@ -25,6 +27,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -157,5 +160,36 @@ public class UserServiceImpl implements UserService {
                        .withSubject(user.getName())
                        .sign(Algorithm.HMAC512("zerobase".getBytes())
                 )).build();
+    }
+
+    @Override
+    public String refreshToken(HttpServletRequest request) {
+
+        String token = request.getHeader("Z-TOKEN");
+
+        String email = "";
+
+        try {
+
+            email = JWT.require(Algorithm.HMAC512("zerobase".getBytes()))
+                       .build()
+                       .verify(token)
+                       .getIssuer();
+
+            User user = userRepository.findByEmail(email)
+                                      .orElseThrow(() -> new UserException(NO_FOUND_USER));
+
+
+            LocalDateTime expiredDt = LocalDateTime.now().plusDays(1);
+
+            return JWT.create()
+                      .withExpiresAt(Timestamp.valueOf(expiredDt))
+                      .withClaim("user+id", user.getId())
+                      .withSubject(user.getName())
+                      .withIssuer(user.getEmail())
+                      .sign(Algorithm.HMAC512("zerobase".getBytes()));
+        }catch (JWTDecodeException e) {
+            throw new UserException(NO_FOUND_USER);
+        }
     }
 }
