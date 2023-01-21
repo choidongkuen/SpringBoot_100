@@ -2,6 +2,7 @@ package com.example.springboot100.user.service;
 
 import com.example.springboot100.user.domain.dto.UserDto;
 import com.example.springboot100.user.domain.dto.UserFindDto;
+import com.example.springboot100.user.domain.dto.UserLoginDto;
 import com.example.springboot100.user.domain.dto.UserUpdateDto.UserUpdateRequest;
 import com.example.springboot100.user.domain.dto.UserUpdateDto.UserUpdateResponse;
 import com.example.springboot100.user.domain.dto.UserUpdatePasswordDto;
@@ -26,4 +27,6 @@ public interface UserService {
     void resetUserPassword(Long id);
 
     Object likeNotice(Long id);
+
+    Object createToken(UserLoginDto request);
 }
