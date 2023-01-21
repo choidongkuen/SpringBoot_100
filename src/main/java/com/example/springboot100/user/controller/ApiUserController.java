@@ -109,6 +109,14 @@ public class ApiUserController {
         );
     }
 
+    @GetMapping("/api/user/{id}/password/reset")
+    public ResponseEntity<Object> resetUserPassword(
+                    @PathVariable("id") Long id
+    ) {
+        userService.resetUserPassword(id);
+        return ResponseEntity.ok().build();
+    }
+
 
 
 
