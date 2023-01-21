@@ -1,6 +1,8 @@
 package com.example.springboot100.user.controller;
 
 
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.example.springboot100.notice.exception.ResponseError;
 import com.example.springboot100.user.domain.dto.UserCreateDto.UserCreateRequest;
 import com.example.springboot100.user.domain.dto.UserFindDto;
@@ -148,11 +150,15 @@ public class ApiUserController {
     }
 
     @PatchMapping("/api/user/login")
-    public ResponseEntity<Object> refreshToken(HttpServletRequest request) {
+    public ResponseEntity<Object> refreshToken(@RequestHeader("Z-TOKEN") String token) {
 
-        return new ResponseEntity<>(
-                userService.refreshToken(request), HttpStatus.OK
-        );
+        try {
+            return new ResponseEntity<>(
+                    userService.refreshToken(token), HttpStatus.OK
+            );
+        }catch (JWTDecodeException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     private static ResponseEntity<Object> getObjectResponseEntity(Errors errors) {
