@@ -2,6 +2,7 @@ package com.example.springboot100.user.domain.entity;
 
 
 import com.example.springboot100.notice.domain.entity.BaseEntity;
+import com.example.springboot100.user.domain.dto.UserStatus;
 import com.example.springboot100.user.domain.dto.UserUpdateDto.UserUpdateRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,6 +42,10 @@ public class User extends BaseEntity {
     @Column
     private String phone;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus;
+
     public User updateUser(UserUpdateRequest request) {
 
         this.phone = request.getPhone();
@@ -48,16 +53,18 @@ public class User extends BaseEntity {
         return this;
 
     }
-
     public void updateUserPassword (String newPassword) {
 
         this.password = newPassword;
     }
-
     public void resetUserPassword ( String resetPassword) {
 
         this.password = resetPassword;
 
     }
+    public User setUserStatus( UserStatus userStatus) {
 
+        this.userStatus = userStatus;
+        return this;
+    }
 }

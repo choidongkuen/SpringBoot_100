@@ -5,6 +5,7 @@ import com.example.springboot100.admin.domain.dto.UserInfoResponseDto;
 import com.example.springboot100.admin.service.AdminService;
 import com.example.springboot100.exception.ErrorCode;
 import com.example.springboot100.user.domain.dto.UserDto;
+import com.example.springboot100.user.domain.dto.UserStatus;
 import com.example.springboot100.user.domain.entity.User;
 import com.example.springboot100.user.domain.repository.UserRepository;
 import com.example.springboot100.user.exception.UserException;
@@ -58,5 +59,15 @@ public class AdminServiceImpl implements AdminService {
                      .stream()
                      .map(UserDto::from)
                      .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Override
+    public ResponseMessage userStatus(Long id, UserStatus userStatus) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserException(NO_FOUND_USER));
+
+        return ResponseMessage.of(user.setUserStatus(userStatus));
     }
 }
