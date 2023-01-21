@@ -161,7 +161,7 @@ public class ApiUserController {
         }
     }
 
-    private static ResponseEntity<Object> getObjectResponseEntity(Errors errors) {
+    public static ResponseEntity<Object> getObjectResponseEntity(Errors errors) {
 
         if(errors.hasErrors()) {
 

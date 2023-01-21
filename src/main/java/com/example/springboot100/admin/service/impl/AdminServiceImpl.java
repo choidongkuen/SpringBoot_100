@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.example.springboot100.exception.ErrorCode.NO_FOUND_USER;
@@ -41,11 +42,21 @@ public class AdminServiceImpl implements AdminService {
 
     @Transactional(readOnly = true)
     @Override
-    public Object getUserDetail(Long id) {
+    public ResponseMessage getUserDetail(Long id) {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserException(ErrorCode.NO_FOUND_USER));
 
         return ResponseMessage.of(user);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<UserDto> findUser(String email) {
+
+        return userRepository.findByEmailContains(email)
+                     .stream()
+                     .map(UserDto::from)
+                     .collect(Collectors.toList());
     }
 }
