@@ -19,7 +19,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "USER_TABLE")
-@SQLDelete(sql = "UPDATE USER SET USER.DELETED_AT = CURRENT_TIMESTAMP WHERE USER.ID = ?")
+@SQLDelete(sql = "UPDATE USER_TABLE SET USER_TABLE.DELETED_AT = CURRENT_TIMESTAMP WHERE USER_TABLE.ID = ?")
 @Where(clause = "DELETED_AT is NULL")
 @Entity
 public class User extends BaseEntity {
