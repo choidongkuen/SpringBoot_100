@@ -1,4 +1,4 @@
-package com.example.springboot100.user.domain.dto;
+package com.example.springboot100.user.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,17 +22,12 @@ public class UserLoginHistory {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
 
     @Column
-    private String email;
-
-    @Column
-    private String userName;
-
-    @Column
-    private LocalDateTime loginDate;
+    private LocalDateTime loginDt;
 
     @Column
     private String ipAddress;
