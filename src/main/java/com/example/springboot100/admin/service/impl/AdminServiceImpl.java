@@ -5,8 +5,10 @@ import com.example.springboot100.admin.domain.dto.UserInfoResponseDto;
 import com.example.springboot100.admin.service.AdminService;
 import com.example.springboot100.exception.ErrorCode;
 import com.example.springboot100.user.domain.dto.UserDto;
+import com.example.springboot100.user.domain.dto.UserLoginHistoryDto;
 import com.example.springboot100.user.domain.dto.UserStatus;
 import com.example.springboot100.user.domain.entity.User;
+import com.example.springboot100.user.domain.repository.UserLoginHistoryRepository;
 import com.example.springboot100.user.domain.repository.UserRepository;
 import com.example.springboot100.user.exception.UserException;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,8 @@ import static com.example.springboot100.exception.ErrorCode.NO_FOUND_USER;
 public class AdminServiceImpl implements AdminService {
 
     private final UserRepository userRepository;
+
+    private final UserLoginHistoryRepository userLoginHistoryRepository;
 
     @Transactional(readOnly = true)
     @Override
@@ -80,5 +84,18 @@ public class AdminServiceImpl implements AdminService {
 
         userRepository.delete(user);
         return ResponseMessage.of(user);
+    }
+
+
+    @Override
+    public List<UserLoginHistoryDto> userLoginHistory(Long id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserException(NO_FOUND_USER));
+
+        return user.getUserLoginHistories()
+                .stream()
+                .map(UserLoginHistoryDto :: from)
+                .collect(Collectors.toList());
     }
 }

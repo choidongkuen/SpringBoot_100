@@ -4,6 +4,7 @@ import com.example.springboot100.admin.domain.dto.ResponseMessage;
 import com.example.springboot100.admin.domain.dto.UserInfoResponseDto;
 import com.example.springboot100.admin.service.AdminService;
 import com.example.springboot100.user.domain.dto.UserDto;
+import com.example.springboot100.user.domain.dto.UserLoginHistoryDto;
 import com.example.springboot100.user.domain.dto.UserStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -67,4 +68,16 @@ public class ApiAdminController {
                 adminService.deleteUser(id), HttpStatus.OK
         );
     }
+
+
+    // 사용자 잡속 이력 확인하는 API
+    @GetMapping("/api/admin/user/{id}/history")
+    public ResponseEntity<List<UserLoginHistoryDto>> userLoginHistory(
+            @PathVariable("id") Long id
+    ) {
+        return new ResponseEntity<>(
+                adminService.userLoginHistory(id), HttpStatus.OK
+        );
+    }
+
 }
