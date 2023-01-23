@@ -70,4 +70,15 @@ public class AdminServiceImpl implements AdminService {
 
         return ResponseMessage.of(user.setUserStatus(userStatus));
     }
+
+    @Transactional
+    @Override
+    public ResponseMessage deleteUser(Long id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserException(NO_FOUND_USER));
+
+        userRepository.delete(user);
+        return ResponseMessage.of(user);
+    }
 }

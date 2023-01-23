@@ -9,12 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static com.example.springboot100.user.controller.ApiUserController.getObjectResponseEntity;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -43,7 +40,7 @@ public class ApiAdminController {
     // 입력한 일부 이메일을 포함하는 모든 사용자 리스트 조회 API
     @GetMapping("/api/admin/user/search")
     public ResponseEntity<List<UserDto>> findUser(
-            @RequestParam(value = "email" ,required = true) String email
+            @RequestParam(value = "email", required = true) String email
     ) {
         return new ResponseEntity<>(
                 adminService.findUser(email), HttpStatus.OK
@@ -58,6 +55,16 @@ public class ApiAdminController {
     ) {
         return new ResponseEntity<>(
                 adminService.userStatus(id, userStatus), HttpStatus.OK
+        );
+    }
+
+    // 사용자 삭제하는 API
+    @DeleteMapping("/api/admin/{id}")
+    public ResponseEntity<ResponseMessage> deleteUser(
+            @PathVariable("id") Long id
+    ) {
+        return new ResponseEntity<> (
+                adminService.deleteUser(id), HttpStatus.OK
         );
     }
 }

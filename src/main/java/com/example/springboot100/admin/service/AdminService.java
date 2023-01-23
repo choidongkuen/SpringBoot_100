@@ -15,4 +15,6 @@ public interface AdminService {
     List<UserDto> findUser(String email);
 
     ResponseMessage userStatus(Long id, UserStatus userStatus);
+
+    ResponseMessage deleteUser(Long id);
 }
