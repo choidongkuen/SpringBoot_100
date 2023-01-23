@@ -24,3 +24,14 @@ VALUES (default, 2,2);
 INSERT INTO NOTICE_LIKE(id, USER_ID, NOTICE_ID)
 VALUES (default, 1,2);
 
+INSERT INTO USER_LOGIN_HISTORY(id, user_id, login_dt, ip_address)
+VALUES (default, 1, CURRENT_TIMESTAMP, '127.0909.212');
+
+
+INSERT INTO USER_LOGIN_HISTORY(id, user_id, login_dt, ip_address)
+VALUES (default, 2, CURRENT_TIMESTAMP, '127.0909.777');
+
+
+INSERT INTO USER_LOGIN_HISTORY(id, user_id, login_dt, ip_address)
+VALUES (default, 3, CURRENT_TIMESTAMP, '127.0909.1111');
+
