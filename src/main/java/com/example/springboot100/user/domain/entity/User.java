@@ -13,6 +13,8 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Getter
@@ -41,6 +43,9 @@ public class User extends BaseEntity {
 
     @Column
     private String phone;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserLoginHistory> userLoginHistories = new ArrayList<>();
 
     @Column
     @Enumerated(EnumType.STRING)
