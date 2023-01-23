@@ -21,4 +21,5 @@ public interface AdminService {
 
 
     List<UserLoginHistoryDto> userLoginHistory(Long id);
+
 }

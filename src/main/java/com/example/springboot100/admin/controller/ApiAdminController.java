@@ -69,6 +69,7 @@ public class ApiAdminController {
         );
     }
 
+
     // 사용자 잡속 이력 확인하는 API
     @GetMapping("/api/admin/user/{id}/history")
     public ResponseEntity<List<UserLoginHistoryDto>> userLoginHistory(
@@ -78,4 +79,5 @@ public class ApiAdminController {
                 adminService.userLoginHistory(id), HttpStatus.OK
         );
     }
+
 }
