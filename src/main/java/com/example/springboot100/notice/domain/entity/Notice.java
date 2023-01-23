@@ -35,7 +35,7 @@ public class Notice extends BaseEntity {
     @Column
     private String content;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "userId")
     private User user; // 게시글을 작성한 사람
 
