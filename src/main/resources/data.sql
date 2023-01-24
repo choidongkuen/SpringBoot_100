@@ -15,6 +15,14 @@ VALUES(default, '내용1',0,0,'제목1',1,CURRENT_TIMESTAMP);
 INSERT INTO NOTICE(id, content, hits,likes,title,user_id, created_at)
 VALUES(default, '내용2',0,0,'제목2',1,CURRENT_TIMESTAMP);
 
+INSERT INTO NOTICE(id, content, hits,likes,title,user_id, created_at)
+VALUES(default, '내용3',0,0,'제목3',3,CURRENT_TIMESTAMP);
+
+INSERT INTO NOTICE(id, content, hits,likes,title,user_id, created_at)
+VALUES(default, '내용4',0,0,'제목4',2,CURRENT_TIMESTAMP);
+
+
+--
 INSERT INTO NOTICE_LIKE(id, USER_ID, NOTICE_ID)
 VALUES (default, 1,1);
 
