@@ -16,7 +16,5 @@ public class UserLogDto {
 
     private String userName;
 
-    private Long noticeCount;
-
     private Long userLikeCount;
 }
