@@ -44,6 +44,9 @@ public class User extends BaseEntity {
     @Column
     private String phone;
 
+    @Column
+    private boolean isLockYn;
+
     @OneToMany(mappedBy = "user")
     private List<UserLoginHistory> userLoginHistories = new ArrayList<>();
 
