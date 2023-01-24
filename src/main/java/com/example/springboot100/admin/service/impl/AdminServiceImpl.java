@@ -4,11 +4,9 @@ import com.example.springboot100.admin.domain.dto.ResponseMessage;
 import com.example.springboot100.admin.domain.dto.UserInfoResponseDto;
 import com.example.springboot100.admin.service.AdminService;
 import com.example.springboot100.exception.ErrorCode;
-import com.example.springboot100.user.domain.dto.UserDto;
-import com.example.springboot100.user.domain.dto.UserLoginHistoryDto;
-import com.example.springboot100.user.domain.dto.UserStatus;
-import com.example.springboot100.user.domain.dto.UserSummary;
+import com.example.springboot100.user.domain.dto.*;
 import com.example.springboot100.user.domain.entity.User;
+import com.example.springboot100.user.domain.repository.UserCustomRepository;
 import com.example.springboot100.user.domain.repository.UserLoginHistoryRepository;
 import com.example.springboot100.user.domain.repository.UserRepository;
 import com.example.springboot100.user.exception.UserException;
@@ -33,6 +31,8 @@ public class AdminServiceImpl implements AdminService {
     private final UserRepository userRepository;
 
     private final UserLoginHistoryRepository userLoginHistoryRepository;
+
+    private final UserCustomRepository userCustomRepository;
 
     @Transactional(readOnly = true)
     @Override
@@ -133,5 +133,10 @@ public class AdminServiceImpl implements AdminService {
                 ,userRepository.countByUserStatus(UserStatus.USING)
                 ,userRepository.count()
         );
+    }
+
+    @Override
+    public List<UserNoticeCountDto> userNoticeCount() {
+        return userCustomRepository.findUserNoticeCount();
     }
 }
