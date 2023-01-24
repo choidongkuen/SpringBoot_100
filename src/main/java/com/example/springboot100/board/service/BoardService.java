@@ -6,4 +6,6 @@ public interface BoardService {
     void addBoardType(BoardCreateInputDto request);
 
     void updateBoardType(Long id,BoardCreateInputDto request);
+
+    void deleteBoardType(Long id);
 }

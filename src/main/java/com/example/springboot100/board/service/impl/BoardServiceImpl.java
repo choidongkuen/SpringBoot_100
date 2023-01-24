@@ -49,4 +49,14 @@ public class BoardServiceImpl implements BoardService {
 
         board.updateBoard(request);
     }
+    @Transactional
+    @Override
+    public void deleteBoardType(Long id) {
+
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new BoardException(ErrorCode.NO_FOUND_BOARD));
+
+        boardRepository.delete(board);
+
+    }
 }
