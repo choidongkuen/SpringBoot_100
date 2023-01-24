@@ -64,7 +64,7 @@ public class ApiAdminController {
     public ResponseEntity<ResponseMessage> deleteUser(
             @PathVariable("id") Long id
     ) {
-        return new ResponseEntity<> (
+        return new ResponseEntity<>(
                 adminService.deleteUser(id), HttpStatus.OK
         );
     }
@@ -80,4 +80,10 @@ public class ApiAdminController {
         );
     }
 
+    // 사용자 접속 제한
+    @PatchMapping("/api/admin/user/{id}/lock")
+    public ResponseEntity<Object> userLock(@PathVariable("id") Long id) {
+
+        return adminService.userLock(id);
+    }
 }
