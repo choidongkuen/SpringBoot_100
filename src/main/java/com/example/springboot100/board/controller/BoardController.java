@@ -24,13 +24,13 @@ public class BoardController {
             Errors error
     ) {
 
-        if(error.hasErrors()) {
+        if (error.hasErrors()) {
             return ResponseEntity.badRequest()
-                     .body(ResponseMessage.fail("입력값이 정확하지 않습니다.",
-                             ResponseError.of(error.getAllErrors()
-                             )
-                         )
-                     );
+                                 .body(ResponseMessage.fail("입력값이 정확하지 않습니다.",
+                                                 ResponseError.of(error.getAllErrors()
+                                                 )
+                                         )
+                                 );
 
         }
 
@@ -45,17 +45,26 @@ public class BoardController {
             Errors errors
     ) {
 
-        if(errors.hasErrors()) {
+        if (errors.hasErrors()) {
             return ResponseEntity.badRequest()
-                    .body(ResponseMessage.fail("입력값이 정확하지 않습니다.",
-                            ResponseError.of(errors.getAllErrors()
-                            )
-                        )
-                    );
+                                 .body(ResponseMessage.fail("입력값이 정확하지 않습니다.",
+                                                 ResponseError.of(errors.getAllErrors()
+                                                 )
+                                         )
+                                 );
         }
 
-        boardService.updateBoardType(id,request);
+        boardService.updateBoardType(id, request);
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/api/board/{id}")
+    public ResponseEntity<Object> deleteBoardType(
+            @PathVariable("id") Long id
+    ) {
+
+        boardService.deleteBoardType(id);
+        return ResponseEntity.ok().build();
+
+    }
 }
