@@ -1,6 +1,7 @@
 package com.example.springboot100.admin.service.impl;
 
 import com.example.springboot100.admin.domain.dto.ResponseMessage;
+import com.example.springboot100.admin.domain.dto.ResponseMessageHeader;
 import com.example.springboot100.admin.domain.dto.UserInfoResponseDto;
 import com.example.springboot100.admin.service.AdminService;
 import com.example.springboot100.exception.ErrorCode;
@@ -13,10 +14,13 @@ import com.example.springboot100.user.domain.repository.UserRepository;
 import com.example.springboot100.user.exception.UserException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.example.springboot100.exception.ErrorCode.NO_FOUND_USER;
@@ -52,7 +56,7 @@ public class AdminServiceImpl implements AdminService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserException(ErrorCode.NO_FOUND_USER));
 
-        return ResponseMessage.of(user);
+        return ResponseMessage.success(user);
     }
 
     @Transactional(readOnly = true)
@@ -72,7 +76,7 @@ public class AdminServiceImpl implements AdminService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserException(NO_FOUND_USER));
 
-        return ResponseMessage.of(user.setUserStatus(userStatus));
+        return ResponseMessage.success(user.setUserStatus(userStatus));
     }
 
     @Transactional
@@ -83,7 +87,7 @@ public class AdminServiceImpl implements AdminService {
                 .orElseThrow(() -> new UserException(NO_FOUND_USER));
 
         userRepository.delete(user);
-        return ResponseMessage.of(user);
+        return ResponseMessage.success(user);
     }
 
 
@@ -97,5 +101,28 @@ public class AdminServiceImpl implements AdminService {
                 .stream()
                 .map(UserLoginHistoryDto :: from)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Override
+    public ResponseEntity<Object> userLock(Long id) {
+
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if(optionalUser.isEmpty()) {
+            return new ResponseEntity<>(
+                    ResponseMessage.fail("사용자 정보가 존재하지 않습니다."), HttpStatus.BAD_REQUEST
+            );
+        }
+
+        if(optionalUser.get().isLockYn()) {
+            return new ResponseEntity<>(
+                    ResponseMessage.fail("해당 사용자는 이미 접속 제한 상태입니다."), HttpStatus.BAD_REQUEST
+            );
+        }
+
+        return new ResponseEntity <>(
+                ResponseMessage.success(optionalUser.get().setUserLock()),HttpStatus.OK
+        );
     }
 }
