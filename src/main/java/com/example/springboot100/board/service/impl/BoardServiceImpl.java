@@ -9,6 +9,9 @@ import com.example.springboot100.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -16,6 +19,8 @@ import org.springframework.stereotype.Service;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
+
+    @Transactional
     @Override
     public void addBoardType(BoardCreateInputDto request) {
 
@@ -29,5 +34,19 @@ public class BoardServiceImpl implements BoardService {
                 .name(request.getBoardName())
                 .content(request.getBoardContent())
                 .build());
+    }
+
+    @Transactional
+    @Override
+    public void updateBoardType(Long id, BoardCreateInputDto request) {
+
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new BoardException(ErrorCode.NO_FOUND_NOTICE));
+
+        if(board.getName().equals(request.getBoardName())) {
+            throw new BoardException(ErrorCode.SAME_NAME);
+        }
+
+        board.updateBoard(request);
     }
 }
