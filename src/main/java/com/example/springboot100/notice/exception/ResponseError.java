@@ -30,8 +30,8 @@ public class ResponseError {
         return ResponseError.builder()
                             .error(HttpStatus.BAD_REQUEST.name())
                             .code(HttpStatus.BAD_REQUEST.value())
-                            .field(e.getField())
-                            .message(e.getDefaultMessage())
+                            .field(e.getField()) // 에러 발생 필드이름
+                            .message(e.getDefaultMessage()) // 에러시 message
                             .build();
     }
 
