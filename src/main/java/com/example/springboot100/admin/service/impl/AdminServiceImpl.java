@@ -139,4 +139,9 @@ public class AdminServiceImpl implements AdminService {
     public List<UserNoticeCountDto> userNoticeCount() {
         return userCustomRepository.findUserNoticeCount();
     }
+
+    @Override
+    public List<UserLogDto> userLogCount() {
+        return userCustomRepository.findUserLogCount();
+    }
 }

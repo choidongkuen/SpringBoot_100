@@ -26,4 +26,6 @@ public interface AdminService {
     UserSummary getUserSummary();
 
     List<UserNoticeCountDto> userNoticeCount();
+
+    List<UserLogDto> userLogCount();
 }
