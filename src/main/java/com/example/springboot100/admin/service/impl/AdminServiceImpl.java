@@ -1,13 +1,13 @@
 package com.example.springboot100.admin.service.impl;
 
 import com.example.springboot100.admin.domain.dto.ResponseMessage;
-import com.example.springboot100.admin.domain.dto.ResponseMessageHeader;
 import com.example.springboot100.admin.domain.dto.UserInfoResponseDto;
 import com.example.springboot100.admin.service.AdminService;
 import com.example.springboot100.exception.ErrorCode;
 import com.example.springboot100.user.domain.dto.UserDto;
 import com.example.springboot100.user.domain.dto.UserLoginHistoryDto;
 import com.example.springboot100.user.domain.dto.UserStatus;
+import com.example.springboot100.user.domain.dto.UserSummary;
 import com.example.springboot100.user.domain.entity.User;
 import com.example.springboot100.user.domain.repository.UserLoginHistoryRepository;
 import com.example.springboot100.user.domain.repository.UserRepository;
@@ -39,13 +39,13 @@ public class AdminServiceImpl implements AdminService {
     public UserInfoResponseDto getUserInfo() {
 
         return UserInfoResponseDto.builder()
-                .userList(userRepository.findAll()
-                            .stream()
-                            .map(UserDto::from)
-                            .collect(Collectors.toList())
-                )
-                .totalUserCount(userRepository.count())
-                .build();
+                                  .userList(userRepository.findAll()
+                                                          .stream()
+                                                          .map(UserDto::from)
+                                                          .collect(Collectors.toList())
+                                  )
+                                  .totalUserCount(userRepository.count())
+                                  .build();
 
     }
 
@@ -54,7 +54,7 @@ public class AdminServiceImpl implements AdminService {
     public ResponseMessage getUserDetail(Long id) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserException(ErrorCode.NO_FOUND_USER));
+                                  .orElseThrow(() -> new UserException(ErrorCode.NO_FOUND_USER));
 
         return ResponseMessage.success(user);
     }
@@ -64,9 +64,9 @@ public class AdminServiceImpl implements AdminService {
     public List<UserDto> findUser(String email) {
 
         return userRepository.findByEmailContains(email)
-                     .stream()
-                     .map(UserDto::from)
-                     .collect(Collectors.toList());
+                             .stream()
+                             .map(UserDto::from)
+                             .collect(Collectors.toList());
     }
 
     @Transactional
@@ -74,7 +74,7 @@ public class AdminServiceImpl implements AdminService {
     public ResponseMessage userStatus(Long id, UserStatus userStatus) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserException(NO_FOUND_USER));
+                                  .orElseThrow(() -> new UserException(NO_FOUND_USER));
 
         return ResponseMessage.success(user.setUserStatus(userStatus));
     }
@@ -84,7 +84,7 @@ public class AdminServiceImpl implements AdminService {
     public ResponseMessage deleteUser(Long id) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserException(NO_FOUND_USER));
+                                  .orElseThrow(() -> new UserException(NO_FOUND_USER));
 
         userRepository.delete(user);
         return ResponseMessage.success(user);
@@ -95,12 +95,12 @@ public class AdminServiceImpl implements AdminService {
     public List<UserLoginHistoryDto> userLoginHistory(Long id) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserException(NO_FOUND_USER));
+                                  .orElseThrow(() -> new UserException(NO_FOUND_USER));
 
         return user.getUserLoginHistories()
-                .stream()
-                .map(UserLoginHistoryDto :: from)
-                .collect(Collectors.toList());
+                   .stream()
+                   .map(UserLoginHistoryDto::from)
+                   .collect(Collectors.toList());
     }
 
     @Transactional
@@ -109,20 +109,29 @@ public class AdminServiceImpl implements AdminService {
 
         Optional<User> optionalUser = userRepository.findById(id);
 
-        if(optionalUser.isEmpty()) {
+        if (optionalUser.isEmpty()) {
             return new ResponseEntity<>(
                     ResponseMessage.fail("사용자 정보가 존재하지 않습니다."), HttpStatus.BAD_REQUEST
             );
         }
 
-        if(optionalUser.get().isLockYn()) {
+        if (optionalUser.get().isLockYn()) {
             return new ResponseEntity<>(
                     ResponseMessage.fail("해당 사용자는 이미 접속 제한 상태입니다."), HttpStatus.BAD_REQUEST
             );
         }
 
-        return new ResponseEntity <>(
-                ResponseMessage.success(optionalUser.get().setUserLock()),HttpStatus.OK
+        return new ResponseEntity<>(
+                ResponseMessage.success(optionalUser.get().setUserLock()), HttpStatus.OK
+        );
+    }
+
+    @Override
+    public UserSummary getUserSummary() {
+
+        return UserSummary.of(userRepository.countByUserStatus(UserStatus.STOP)
+                ,userRepository.countByUserStatus(UserStatus.USING)
+                ,userRepository.count()
         );
     }
 }

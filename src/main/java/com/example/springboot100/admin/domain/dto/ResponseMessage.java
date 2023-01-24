@@ -16,7 +16,7 @@ public class ResponseMessage {
 
     ResponseMessageHeader responseMessageHeader;
 
-    Object data;
+    Object body;
 
     public static ResponseMessage success(User user) {
 
@@ -27,7 +27,7 @@ public class ResponseMessage {
                         .message(HttpStatus.OK.getReasonPhrase())
                         .status(HttpStatus.OK.name())
                         .build())
-                .data(UserDto.from(user))
+                .body(UserDto.from(user))
                 .build();
     }
 
@@ -40,7 +40,7 @@ public class ResponseMessage {
                         .message(message)
                         .status(HttpStatus.BAD_REQUEST.name())
                         .build())
-                .data(null)
+                .body(null)
                 .build();
     }
 }
