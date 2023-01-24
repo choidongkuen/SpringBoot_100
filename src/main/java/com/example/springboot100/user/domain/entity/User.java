@@ -45,7 +45,7 @@ public class User extends BaseEntity {
     private String phone;
 
     @Column
-    private boolean isLockYn;
+    private boolean lockYn;
 
     @OneToMany(mappedBy = "user")
     private List<UserLoginHistory> userLoginHistories = new ArrayList<>();
@@ -73,6 +73,11 @@ public class User extends BaseEntity {
     public User setUserStatus( UserStatus userStatus) {
 
         this.userStatus = userStatus;
+        return this;
+    }
+
+    public User setUserLock() {
+        this.lockYn = true;
         return this;
     }
 }
