@@ -6,6 +6,7 @@ import com.example.springboot100.admin.service.AdminService;
 import com.example.springboot100.user.domain.dto.UserDto;
 import com.example.springboot100.user.domain.dto.UserLoginHistoryDto;
 import com.example.springboot100.user.domain.dto.UserStatus;
+import com.example.springboot100.user.domain.dto.UserSummary;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -85,5 +86,14 @@ public class ApiAdminController {
     public ResponseEntity<Object> userLock(@PathVariable("id") Long id) {
 
         return adminService.userLock(id);
+    }
+
+    // 사용자 정보 조회
+    @GetMapping("/api/admin/user/status")
+    public ResponseEntity<UserSummary> userStatusCount() {
+
+        return new ResponseEntity<>(
+                adminService.getUserSummary(), HttpStatus.OK
+        );
     }
 }
