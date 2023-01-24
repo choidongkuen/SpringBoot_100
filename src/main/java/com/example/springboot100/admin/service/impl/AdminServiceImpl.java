@@ -144,4 +144,9 @@ public class AdminServiceImpl implements AdminService {
     public List<UserLogDto> userLogCount() {
         return userCustomRepository.findUserLogCount();
     }
+
+    @Override
+    public List<UserLogDto> userLikeBest() {
+        return userCustomRepository.findUserLikeBest();
+    }
 }

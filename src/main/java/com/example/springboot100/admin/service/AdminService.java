@@ -28,4 +28,6 @@ public interface AdminService {
     List<UserNoticeCountDto> userNoticeCount();
 
     List<UserLogDto> userLogCount();
+
+    List<UserLogDto> userLikeBest();
 }
