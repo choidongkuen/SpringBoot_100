@@ -18,29 +18,39 @@ public class ResponseMessage {
 
     Object body;
 
-    public static ResponseMessage success(User user) {
+    public static ResponseMessage success(Object data) {
 
         return ResponseMessage.builder()
                 .responseMessageHeader(ResponseMessageHeader.builder()
                         .result(true)
                         .resultCode(HttpStatus.OK.value())
-                        .message(HttpStatus.OK.getReasonPhrase())
                         .status(HttpStatus.OK.name())
+                        .message(HttpStatus.OK.getReasonPhrase())
                         .build())
-                .body(UserDto.from(user))
+                .body(data)
                 .build();
+    }
+
+    public static ResponseMessage success() {
+
+        return success(null);
+    }
+
+    public static ResponseMessage fail(String message, Object data) {
+
+        return ResponseMessage.builder()
+                              .responseMessageHeader(ResponseMessageHeader.builder()
+                                      .result(false)
+                                      .resultCode(HttpStatus.BAD_REQUEST.value())
+                                      .status(HttpStatus.BAD_REQUEST.name())
+                                      .message(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                                      .build())
+                              .body(data)
+                              .build();
     }
 
     public static ResponseMessage fail(String message) {
 
-        return ResponseMessage.builder()
-                .responseMessageHeader(ResponseMessageHeader.builder()
-                        .result(false)
-                        .resultCode(HttpStatus.BAD_REQUEST.value())
-                        .message(message)
-                        .status(HttpStatus.BAD_REQUEST.name())
-                        .build())
-                .body(null)
-                .build();
+        return fail(message, null);
     }
 }
