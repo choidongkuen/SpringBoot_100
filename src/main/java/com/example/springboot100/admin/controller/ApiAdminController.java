@@ -3,10 +3,7 @@ package com.example.springboot100.admin.controller;
 import com.example.springboot100.admin.domain.dto.ResponseMessage;
 import com.example.springboot100.admin.domain.dto.UserInfoResponseDto;
 import com.example.springboot100.admin.service.AdminService;
-import com.example.springboot100.user.domain.dto.UserDto;
-import com.example.springboot100.user.domain.dto.UserLoginHistoryDto;
-import com.example.springboot100.user.domain.dto.UserStatus;
-import com.example.springboot100.user.domain.dto.UserSummary;
+import com.example.springboot100.user.domain.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -94,6 +91,15 @@ public class ApiAdminController {
 
         return new ResponseEntity<>(
                 adminService.getUserSummary(), HttpStatus.OK
+        );
+    }
+
+    // 사용자 별 게시글 수 조회
+    @GetMapping("/api/admin/user/notice/count")
+    public ResponseEntity<List<UserNoticeCountDto>> userNoticeCount() {
+
+        return new ResponseEntity<>(
+                adminService.userNoticeCount(), HttpStatus.OK
         );
     }
 }
