@@ -102,4 +102,13 @@ public class ApiAdminController {
                 adminService.userNoticeCount(), HttpStatus.OK
         );
     }
-}
+
+    // 사용자별 게시글수와 좋아요수 조회
+    @GetMapping("/api/admin/user/log/count")
+    public ResponseEntity<List<UserLogDto>> userLogCount() {
+
+        return new ResponseEntity<>(
+                adminService.userLogCount(), HttpStatus.OK
+        );
+    }
+ }
