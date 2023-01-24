@@ -1,5 +1,6 @@
 package com.example.springboot100.board.domain.entity;
 
+import com.example.springboot100.board.domain.dto.BoardCreateInputDto;
 import com.example.springboot100.notice.domain.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,4 +35,10 @@ public class Board extends BaseEntity {
     @Column
     @Lob
     private String content;
+
+    public void updateBoard(BoardCreateInputDto request) {
+
+        this.name = request.getBoardName();
+        this.content = request.getBoardContent();
+    }
 }
