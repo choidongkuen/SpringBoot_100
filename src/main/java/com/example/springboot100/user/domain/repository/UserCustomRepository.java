@@ -1,5 +1,6 @@
 package com.example.springboot100.user.domain.repository;
 
+import com.example.springboot100.user.domain.dto.UserLogDto;
 import com.example.springboot100.user.domain.dto.UserNoticeCountDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,18 @@ public class UserCustomRepository {
         // 항상 테이블 이름 기준
         List<UserNoticeCountDto> result =  entityManager.createNativeQuery(sql).getResultList();
         return result;
+
+    }
+
+    public List<UserLogDto> findUserLogCount() {
+
+        String sql
+                = " select u.id, u.email, u.name," +
+                " (select count(*) from notice n where n.user_id = u.id) notice_count, " +
+                " (select count(*) from notice_like nl where nl.user_id = u.id) notice_like_count " +
+                " from user_table u ";
+
+        return entityManager.createNativeQuery(sql).getResultList();
 
     }
 }
