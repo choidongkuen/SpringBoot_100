@@ -111,4 +111,13 @@ public class ApiAdminController {
                 adminService.userLogCount(), HttpStatus.OK
         );
     }
- }
+
+    // 좋아요를 가장 많이 한 사용자 목록(3)개를 조회
+    @GetMapping("/api/admin/user/like/best")
+    public ResponseEntity<List<UserLogDto>> userLikeBest() {
+
+        return new ResponseEntity<>(
+                adminService.userLikeBest(), HttpStatus.OK
+        );
+    }
+}
