@@ -22,7 +22,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     @Override
-    public void addBoardType(BoardCreateInputDto request) {
+    public void addBoard(BoardCreateInputDto request) {
 
         if(boardRepository.findByName(request.getBoardName()).isPresent()) {
 
