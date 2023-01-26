@@ -33,9 +33,8 @@ public class BoardController {
                      );
 
         }
-
-
-
+        boardService.addBoardType(request);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/api/board")
