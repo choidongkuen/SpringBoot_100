@@ -20,6 +20,8 @@ public enum ErrorCode {
 
     NO_FOUND_BOARD_TYPE("해당하는 게시글 유형이 없습니다.", HttpStatus.BAD_REQUEST),
 
+    BOARD_TYPE_HAS_BOARDS("해당하는 게시판 유형에 속하는 게시글이 있습니다.",HttpStatus.BAD_REQUEST),
+
     SAME_NAME("변경하려는 게시글 제목이 기존과 동일합니다.", HttpStatus.BAD_REQUEST);
 
     private final String message;

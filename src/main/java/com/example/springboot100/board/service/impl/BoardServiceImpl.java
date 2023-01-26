@@ -50,4 +50,18 @@ public class BoardServiceImpl implements BoardService {
 
         boardType.updateBoardType(request);
     }
+
+    @Transactional
+    @Override
+    public void deleteBoardType(Long id) {
+
+        BoardType boardType = boardTypeRepository.findById(id)
+                .orElseThrow(()-> new BoardException(ErrorCode.NO_FOUND_BOARD_TYPE));
+
+        if(boardType.getBoards().size() > 0 ) {
+            throw new BoardException(ErrorCode.BOARD_TYPE_HAS_BOARDS);
+        }
+
+        boardTypeRepository.delete(boardType);
+    }
 }

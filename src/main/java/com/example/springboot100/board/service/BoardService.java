@@ -8,4 +8,6 @@ public interface BoardService {
     void addBoardType(BoardTypeInputRequestDto request);
 
     void updateBoardType(Long id,BoardTypeInputRequestDto request);
+
+    void deleteBoardType(Long id);
 }

@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Getter
@@ -26,6 +28,9 @@ public class BoardType extends BaseEntity {
 
     @Column(unique = true)
     private String name;
+
+    @OneToMany(mappedBy = "boardType")
+    private List<Board> boards = new ArrayList<>();
 
     public void updateBoardType(BoardTypeInputRequestDto request) {
         this.name = request.getName();

@@ -57,3 +57,17 @@ INSERT INTO BOARD_TYPE(id, name)
 VALUES (default, '타입1');
 INSERT INTO BOARD_TYPE(id, name)
 VALUES (default, '타입2');
+
+
+
+INSERT INTO BOARD(id, user_id, board_type_id, title, content)
+VALUES (default, 1, 1, '제목1','내용1');
+
+INSERT INTO BOARD(id, user_id, board_type_id, title, content)
+VALUES (default, 2, 1, '제목2','내용2');
+
+INSERT INTO BOARD(id, user_id, board_type_id, title, content)
+VALUES (default, 3, 1, '제목3','내용3');
+
+
+
