@@ -2,6 +2,7 @@ package com.example.springboot100.board.controller;
 
 import com.example.springboot100.admin.domain.dto.ResponseMessage;
 import com.example.springboot100.board.domain.dto.BoardCreateInputDto;
+import com.example.springboot100.board.domain.dto.BoardTypeInputRequestDto;
 import com.example.springboot100.board.service.BoardService;
 import com.example.springboot100.notice.exception.ResponseError;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,25 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/api/board/type")
+    public ResponseEntity<Object> addBoardType(
+            @RequestBody @Valid BoardTypeInputRequestDto request,
+            Errors error
+    ) {
+        if (error.hasErrors()) {
+            return ResponseEntity.badRequest()
+                     .body(ResponseMessage.fail("입력값이 정확하지 않습니다.",
+                                     ResponseError.of(error.getAllErrors()
+                                     )
+                             )
+                     );
+
+        }
+
+
+
+    }
+
+    @PostMapping("/api/board")
     public ResponseEntity<Object> addBoard(
             @RequestBody @Valid BoardCreateInputDto request,
             Errors error
@@ -26,15 +46,15 @@ public class BoardController {
 
         if (error.hasErrors()) {
             return ResponseEntity.badRequest()
-                                 .body(ResponseMessage.fail("입력값이 정확하지 않습니다.",
-                                                 ResponseError.of(error.getAllErrors()
-                                                 )
-                                         )
-                                 );
+                     .body(ResponseMessage.fail("입력값이 정확하지 않습니다.",
+                                     ResponseError.of(error.getAllErrors()
+                                     )
+                             )
+                     );
 
         }
 
-        boardService.addBoardType(request);
+        boardService.addBoard(request);
         return ResponseEntity.ok().build();
     }
 
@@ -47,11 +67,11 @@ public class BoardController {
 
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest()
-                                 .body(ResponseMessage.fail("입력값이 정확하지 않습니다.",
-                                                 ResponseError.of(errors.getAllErrors()
-                                                 )
-                                         )
-                                 );
+                     .body(ResponseMessage.fail("입력값이 정확하지 않습니다.",
+                                     ResponseError.of(errors.getAllErrors()
+                                     )
+                             )
+                     );
         }
 
         boardService.updateBoardType(id, request);
