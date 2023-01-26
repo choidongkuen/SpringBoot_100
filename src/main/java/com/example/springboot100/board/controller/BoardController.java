@@ -19,7 +19,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/api/board/type")
-    public ResponseEntity<Object> addBoardType(
+    public ResponseEntity<Object> addBoard(
             @RequestBody @Valid BoardCreateInputDto request,
             Errors error
     ) {
