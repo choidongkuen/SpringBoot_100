@@ -1,5 +1,6 @@
 package com.example.springboot100.board.domain.entity;
 
+import com.example.springboot100.board.domain.dto.BoardTypeInputRequestDto;
 import com.example.springboot100.notice.domain.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,4 +27,7 @@ public class BoardType extends BaseEntity {
     @Column(unique = true)
     private String name;
 
+    public void updateBoardType(BoardTypeInputRequestDto request) {
+        this.name = request.getName();
+    }
 }

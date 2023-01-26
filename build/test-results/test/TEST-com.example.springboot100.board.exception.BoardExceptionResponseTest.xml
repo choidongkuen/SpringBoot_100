@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.springboot100.board.exception.BoardExceptionResponseTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-01-24T19:40:24" hostname="ChoiDongKuen-MacBook-Pro.local" time="0.01">
+  <properties/>
+  <testcase name="BoardExceptionResponse 테스트" classname="com.example.springboot100.board.exception.BoardExceptionResponseTest" time="0.01"/>
+  <system-out><![CDATA[해당 게시글은 이미 존재합니다
+OK
+BAD_REQUEST
+ALREADY_BOARD_EXISTS
+null
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

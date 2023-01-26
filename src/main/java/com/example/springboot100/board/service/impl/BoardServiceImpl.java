@@ -1,6 +1,7 @@
 package com.example.springboot100.board.service.impl;
 
 import com.example.springboot100.board.domain.dto.BoardTypeInputRequestDto;
+import com.example.springboot100.board.domain.entity.Board;
 import com.example.springboot100.board.domain.entity.BoardType;
 import com.example.springboot100.board.domain.repository.BoardTypeRepository;
 import com.example.springboot100.board.exception.BoardException;
@@ -36,4 +37,17 @@ public class BoardServiceImpl implements BoardService {
                                           .build());
     }
 
+    @Transactional
+    @Override
+    public void updateBoardType(Long id,BoardTypeInputRequestDto request) {
+
+        BoardType boardType = boardTypeRepository.findById(id)
+                .orElseThrow(() -> new BoardException(ErrorCode.NO_FOUND_BOARD_TYPE));
+
+        if(boardType.getName().equals(request.getName())) {
+            throw new BoardException(ErrorCode.ALREADY_BOARD_EXISTS);
+        }
+
+        boardType.updateBoardType(request);
+    }
 }
