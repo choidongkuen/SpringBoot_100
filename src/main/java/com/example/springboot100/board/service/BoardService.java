@@ -1,11 +1,9 @@
 package com.example.springboot100.board.service;
 
 import com.example.springboot100.board.domain.dto.BoardCreateInputDto;
+import com.example.springboot100.board.domain.dto.BoardTypeInputRequestDto;
 
 public interface BoardService {
-    void addBoard(BoardCreateInputDto request);
 
-    void updateBoardType(Long id,BoardCreateInputDto request);
-
-    void deleteBoardType(Long id);
+    void addBoardType(BoardTypeInputRequestDto request);
 }
