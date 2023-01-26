@@ -1,6 +1,7 @@
 package com.example.springboot100.board.service.impl;
 
 import com.example.springboot100.board.domain.dto.BoardTypeInputRequestDto;
+import com.example.springboot100.board.domain.dto.BoardTypeListGetResponseDto;
 import com.example.springboot100.board.domain.entity.Board;
 import com.example.springboot100.board.domain.entity.BoardType;
 import com.example.springboot100.board.domain.repository.BoardTypeRepository;
@@ -12,7 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -64,4 +67,14 @@ public class BoardServiceImpl implements BoardService {
 
         boardTypeRepository.delete(boardType);
     }
+
+    @Transactional
+    @Override
+    public List<BoardTypeListGetResponseDto> getBoardList() {
+
+        return boardTypeRepository.findAll()
+                .stream().map(BoardTypeListGetResponseDto::of)
+                .collect(Collectors.toList());
+    }
 }
+

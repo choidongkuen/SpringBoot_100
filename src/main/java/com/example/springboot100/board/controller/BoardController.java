@@ -2,15 +2,19 @@ package com.example.springboot100.board.controller;
 
 import com.example.springboot100.admin.domain.dto.ResponseMessage;
 import com.example.springboot100.board.domain.dto.BoardTypeInputRequestDto;
+import com.example.springboot100.board.domain.dto.BoardTypeListGetResponseDto;
+import com.example.springboot100.board.domain.entity.BoardType;
 import com.example.springboot100.board.service.BoardService;
 import com.example.springboot100.notice.exception.ResponseError;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -64,5 +68,12 @@ public class BoardController {
     ) {
         boardService.deleteBoardType(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/api/board/type")
+    public ResponseEntity<List<BoardTypeListGetResponseDto>> getBoardList() {
+
+        return new ResponseEntity<>(boardService.getBoardList(), HttpStatus.OK);
+
     }
 }
