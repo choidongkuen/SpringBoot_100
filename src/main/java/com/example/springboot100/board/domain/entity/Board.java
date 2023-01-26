@@ -2,6 +2,7 @@ package com.example.springboot100.board.domain.entity;
 
 import com.example.springboot100.board.domain.dto.BoardCreateInputDto;
 import com.example.springboot100.notice.domain.entity.BaseEntity;
+import com.example.springboot100.user.domain.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,8 +30,15 @@ public class Board extends BaseEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
+    @ManyToOne
+    private BoardType boardType;
+
     @Column
-    private String name;
+    private String title;
 
     @Column
     @Lob
@@ -38,7 +46,7 @@ public class Board extends BaseEntity {
 
     public void updateBoard(BoardCreateInputDto request) {
 
-        this.name = request.getBoardName();
+        this.title = request.getBoardName();
         this.content = request.getBoardContent();
     }
 }
