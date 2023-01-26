@@ -53,12 +53,7 @@ VALUES (default, 2, CURRENT_TIMESTAMP, '127.0909.777');
 INSERT INTO USER_LOGIN_HISTORY(id, user_id, login_dt, ip_address)
 VALUES (default, 3, CURRENT_TIMESTAMP, '127.0909.1111');
 
-INSERT INTO BOARD(id, name, content, created_at)
-VALUES (default, '게시글1', '내용1입니다.', CURRENT_TIMESTAMP);
-
-
-INSERT INTO BOARD(id, name, content, created_at)
-VALUES (default, '게시글2', '내용2입니다.', CURRENT_TIMESTAMP);
-
-INSERT INTO BOARD(id, name, content, created_at)
-VALUES (default, '게시글3', '내용3입니다.', CURRENT_TIMESTAMP);
+INSERT INTO BOARD_TYPE(id, name)
+VALUES (default, '타입1');
+INSERT INTO BOARD_TYPE(id, name)
+VALUES (default, '타입2');
