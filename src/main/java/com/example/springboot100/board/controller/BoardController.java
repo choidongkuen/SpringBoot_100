@@ -1,9 +1,9 @@
 package com.example.springboot100.board.controller;
 
 import com.example.springboot100.admin.domain.dto.ResponseMessage;
+import com.example.springboot100.board.domain.dto.BoardTypeCountResponseDto;
 import com.example.springboot100.board.domain.dto.BoardTypeInputRequestDto;
 import com.example.springboot100.board.domain.dto.BoardTypeListGetResponseDto;
-import com.example.springboot100.board.domain.entity.BoardType;
 import com.example.springboot100.board.service.BoardService;
 import com.example.springboot100.notice.exception.ResponseError;
 import lombok.RequiredArgsConstructor;
@@ -73,7 +73,14 @@ public class BoardController {
     @GetMapping("/api/board/type")
     public ResponseEntity<List<BoardTypeListGetResponseDto>> getBoardList() {
 
-        return new ResponseEntity<>(boardService.getBoardList(), HttpStatus.OK);
+        return new ResponseEntity<>(boardService.getBoardTypeList(), HttpStatus.OK);
 
+    }
+
+
+    @GetMapping("/api/board/type/count")
+    public ResponseEntity<List<BoardTypeCountResponseDto>> boardTypeCount() {
+
+        return new ResponseEntity<>(boardService.getBoardTypeCount(), HttpStatus.OK);
     }
 }

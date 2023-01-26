@@ -1,9 +1,11 @@
 package com.example.springboot100.board.service.impl;
 
+import com.example.springboot100.board.domain.dto.BoardTypeCountResponseDto;
 import com.example.springboot100.board.domain.dto.BoardTypeInputRequestDto;
 import com.example.springboot100.board.domain.dto.BoardTypeListGetResponseDto;
 import com.example.springboot100.board.domain.entity.Board;
 import com.example.springboot100.board.domain.entity.BoardType;
+import com.example.springboot100.board.domain.repository.BoardTypeCustomRepository;
 import com.example.springboot100.board.domain.repository.BoardTypeRepository;
 import com.example.springboot100.board.exception.BoardException;
 import com.example.springboot100.board.service.BoardService;
@@ -23,6 +25,8 @@ import java.util.stream.Collectors;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardTypeRepository boardTypeRepository;
+
+    private final BoardTypeCustomRepository boardTypeCustomRepository;
 
     @Transactional
     @Override
@@ -70,11 +74,17 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     @Override
-    public List<BoardTypeListGetResponseDto> getBoardList() {
+    public List<BoardTypeListGetResponseDto> getBoardTypeList() {
 
         return boardTypeRepository.findAll()
                 .stream().map(BoardTypeListGetResponseDto::of)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Override
+    public List<BoardTypeCountResponseDto> getBoardTypeCount() {
+        return boardTypeCustomRepository.getBoardTypeCount();
     }
 }
 
