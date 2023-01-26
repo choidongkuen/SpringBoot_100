@@ -23,7 +23,7 @@ public class BoardType extends BaseEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column
+    @Column(unique = true)
     private String name;
 
 }
