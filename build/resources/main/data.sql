@@ -53,21 +53,21 @@ VALUES (default, 2, CURRENT_TIMESTAMP, '127.0909.777');
 INSERT INTO USER_LOGIN_HISTORY(id, user_id, login_dt, ip_address)
 VALUES (default, 3, CURRENT_TIMESTAMP, '127.0909.1111');
 
-INSERT INTO BOARD_TYPE(id, name)
-VALUES (default, '타입1');
-INSERT INTO BOARD_TYPE(id, name)
-VALUES (default, '타입2');
+INSERT INTO BOARD_TYPE(id, name, created_at)
+VALUES (default, '타입1', CURRENT_TIMESTAMP);
+INSERT INTO BOARD_TYPE(id, name, created_at)
+VALUES (default, '타입2', CURRENT_TIMESTAMP);
 
 
 
-INSERT INTO BOARD(id, user_id, board_type_id, title, content)
-VALUES (default, 1, 1, '제목1','내용1');
+INSERT INTO BOARD(id, user_id, board_type_id, title, content, top_yn)
+VALUES (default, 1, 1, '제목1','내용1',false);
 
-INSERT INTO BOARD(id, user_id, board_type_id, title, content)
-VALUES (default, 2, 1, '제목2','내용2');
+INSERT INTO BOARD(id, user_id, board_type_id, title, content, top_yn)
+VALUES (default, 2, 1, '제목2','내용2',false);
 
-INSERT INTO BOARD(id, user_id, board_type_id, title, content)
-VALUES (default, 3, 1, '제목3','내용3');
+INSERT INTO BOARD(id, user_id, board_type_id, title, content, top_yn)
+VALUES (default, 3, 1, '제목3','내용3',false);
 
 
 

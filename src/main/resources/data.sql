@@ -60,14 +60,14 @@ VALUES (default, '타입2', CURRENT_TIMESTAMP);
 
 
 
-INSERT INTO BOARD(id, user_id, board_type_id, title, content)
-VALUES (default, 1, 1, '제목1','내용1');
+INSERT INTO BOARD(id, user_id, board_type_id, title, content, top_yn)
+VALUES (default, 1, 1, '제목1','내용1',false);
 
-INSERT INTO BOARD(id, user_id, board_type_id, title, content)
-VALUES (default, 2, 1, '제목2','내용2');
+INSERT INTO BOARD(id, user_id, board_type_id, title, content, top_yn)
+VALUES (default, 2, 1, '제목2','내용2',false);
 
-INSERT INTO BOARD(id, user_id, board_type_id, title, content)
-VALUES (default, 3, 1, '제목3','내용3');
+INSERT INTO BOARD(id, user_id, board_type_id, title, content, top_yn)
+VALUES (default, 3, 1, '제목3','내용3',false);
 
 
 

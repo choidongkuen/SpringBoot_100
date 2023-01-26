@@ -17,4 +17,6 @@ public interface BoardService {
     List<BoardTypeListGetResponseDto> getBoardTypeList();
 
     List<BoardTypeCountResponseDto> getBoardTypeCount();
+
+    void setBoardTop(Long id);
 }

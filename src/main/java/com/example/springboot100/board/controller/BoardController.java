@@ -58,7 +58,7 @@ public class BoardController {
 
         }
 
-        boardService.updateBoardType(id,request);
+        boardService.updateBoardType(id, request);
         return ResponseEntity.ok().build();
     }
 
@@ -82,5 +82,14 @@ public class BoardController {
     public ResponseEntity<List<BoardTypeCountResponseDto>> boardTypeCount() {
 
         return new ResponseEntity<>(boardService.getBoardTypeCount(), HttpStatus.OK);
+    }
+
+
+    @PatchMapping("/api/board/{id}/top")
+    public ResponseEntity<Object> boardPostTop(
+            @PathVariable("id") Long id
+    ) {
+        boardService.setBoardTop(id);
+        return ResponseEntity.ok().build();
     }
 }

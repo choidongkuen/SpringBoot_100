@@ -5,6 +5,7 @@ import com.example.springboot100.board.domain.dto.BoardTypeInputRequestDto;
 import com.example.springboot100.board.domain.dto.BoardTypeListGetResponseDto;
 import com.example.springboot100.board.domain.entity.Board;
 import com.example.springboot100.board.domain.entity.BoardType;
+import com.example.springboot100.board.domain.repository.BoardRepository;
 import com.example.springboot100.board.domain.repository.BoardTypeCustomRepository;
 import com.example.springboot100.board.domain.repository.BoardTypeRepository;
 import com.example.springboot100.board.exception.BoardException;
@@ -26,7 +27,10 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardTypeRepository boardTypeRepository;
 
+    private final BoardRepository boardRepository;
+
     private final BoardTypeCustomRepository boardTypeCustomRepository;
+
 
     @Transactional
     @Override
@@ -85,6 +89,16 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<BoardTypeCountResponseDto> getBoardTypeCount() {
         return boardTypeCustomRepository.getBoardTypeCount();
+    }
+
+    @Transactional
+    @Override
+    public void setBoardTop(Long id) {
+
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new BoardException(ErrorCode.NO_FOUND_BOARD));
+
+        board.setBoardTop();
     }
 }
 

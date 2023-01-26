@@ -44,9 +44,16 @@ public class Board extends BaseEntity {
     @Lob
     private String content;
 
+    @Column
+    private boolean topYn; // 해당 엔티티의 최상단 배치 여부
+
     public void updateBoard(BoardCreateInputDto request) {
 
         this.title = request.getBoardName();
         this.content = request.getBoardContent();
+    }
+
+    public void setBoardTop() {
+        this.topYn = true;
     }
 }
